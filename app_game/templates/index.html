@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <!--header row-->
+        <div class="row text-center">
+            <div class="col" id="header">
+                <h1>Welcome To Ninja Gold!</h1>
+            </div>
+        </div>
+        <!--gold counter row-->
+        <div class="row">
+            <div class="col text-center">
+                <h4>Your Gold:</h4> 
+                <h1>{{request.session.gold}}</h1>
+            </div>
+        </div>
+        <!--row with four equal columns of boxes-->
+        <div class="row justify-content-center" id="row_boxes">
+            <div class="col-sm p-3 box text-center" id="farmBox">
+                <h3>Farm</h3>
+                <h6>(earns 10-20 golds)</h6>
+                <form class="text-center" action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input name="storehouse" type="hidden" value="farm">
+                    <button type="submit" class="btn btn-success" value="submit">Find Gold!</button>
+                </form>
+            </div>
+            <div class="col-sm p-3 box text-center" id="caveBox">
+                <h3>Cave</h3>
+                <h6>(earns 5-10 golds)</h6>
+                <form class="text-center" action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input name="storehouse" type="hidden" value="cave">
+                    <button type="submit" class="btn btn-success" value="submit">Find Gold!</button>
+                </form>
+            </div>
+            <div class="col-sm p-3 box text-center" id="houseBox">
+                <h3>House</h3>
+                <h6>(earns 2-5 golds)</h6>
+                <form class="text-center" action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input name="storehouse" type="hidden" value="house">
+                    <button type="submit" class="btn btn-success" value="submit">Find Gold!</button>
+                </form>
+            </div>
+            <div class="col-sm p-3 box text-center" id="casinoBox">
+                <h3>Casino</h3>
+                <h6>(earns/takes 0-50 golds)</h6>
+                <form class="text-center" action="/process_money" method="POST">
+                    {% csrf_token %}
+                    <input name="storehouse" type="hidden" value="casino">
+                    <button type="submit" class="btn btn-success" value="submit">Find Gold!</button>
+                </form>
+            </div>
+        </div>
+        <!--reset game button-->
+        <div class="row">
+            <div class="col text-center" id="reset">
+                <a href="/reset" class="btn btn-danger" role="button" value="reset">Reset</a>
+            </div>
+        </div>
+        <!--row keeping track of all activity-->
+        <div class="row">
+            <div class="col" id="activity_list">
+                <h4>Activities:</h4>
+                    {% for value in request.session.activities %}
+                    <p>{{value}}</p>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
